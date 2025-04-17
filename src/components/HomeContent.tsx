@@ -60,7 +60,7 @@ const HomeContent = ({ setActiveTab, setSelectedEvent }: any) => {
 
       <section className="max-w-3xl mx-auto px-4 mt-20 text-center">
         <h2 className="text-xl font-semibold text-blue-800 dark:text-blue-300 mb-2">📬 Contact Us</h2>
-        <p>Email us at: <a href="mailto:ddmsports25@gmail.com" className="text-blue-600 dark:text-blue-400 underline">ddmsports25@gmail.com</a></p>
+        <p>Email us at: <a href="mailto:tbd@gmail.com" className="text-blue-600 dark:text-blue-400 underline">tbd@gmail.com</a></p>
         <p className="mt-2">Event Date: <strong>May 17, 2025</strong></p>
         <p>Location: <em>To Be Decided</em></p>
       </section>
