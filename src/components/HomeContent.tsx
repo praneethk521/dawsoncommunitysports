@@ -35,6 +35,23 @@ const HomeContent = ({ setActiveTab, setSelectedEvent }: any) => {
         </p>
       </section>
 
+      <section className="max-w-3xl mx-auto px-6 mt-12 mb-8 text-center">
+  <div className="bg-gradient-to-r from-amber-100 via-yellow-50 to-amber-100 dark:from-yellow-900 dark:via-yellow-800 dark:to-yellow-900 rounded-xl shadow-md py-6 px-4 sm:px-8">
+    <h2 className="text-2xl font-bold text-yellow-900 dark:text-yellow-100 mb-2">📝 Registration Now Open</h2>
+    <p className="text-sm sm:text-base text-gray-700 dark:text-yellow-200 mb-4">
+      All participants must register by <strong>April 18, 2025</strong> to be eligible to compete in Dawson Community Sports 2025.
+    </p>
+    <a
+      href="https://forms.gle/F8fY4Fo2xgohKJYB9"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-block bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-500 text-white text-sm sm:text-base font-semibold px-6 py-2 rounded-full transition duration-300"
+    >
+      Register Here
+    </a>
+  </div>
+</section>
+  
       <section className="max-w-4xl mx-auto px-4 mt-14">
         <h2 className="text-2xl font-semibold mb-4 text-blue-800 dark:text-blue-300">📅 Key Dates</h2>
         <table className="w-full border border-gray-300 text-left bg-white dark:bg-gray-700 dark:text-white shadow-sm">
