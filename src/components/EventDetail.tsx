@@ -127,7 +127,6 @@ const EventDetail = ({ event }: any) => {
                   <li>Men's Code: <code className="text-blue-700 dark:text-blue-300 font-semibold">BB6FSY97</code></li>
                   <li>Women's Code: <code className="text-blue-700 dark:text-blue-300 font-semibold">BKS92XP3</code></li>
                 </ul>
-                <li>Top walkers will be highlighted on the leaderboard and celebrated on May 17.</li>
               </ul>
             </div>
           </div>
