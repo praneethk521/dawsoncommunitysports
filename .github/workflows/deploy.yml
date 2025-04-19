@@ -3,32 +3,42 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - master
+      - main
+      - dev
 
 jobs:
-  build-deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    concurrency:
+      group: "pages-deploy"
+      cancel-in-progress: false
 
     steps:
-      - uses: actions/checkout@v3
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: 🟦 Set Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: 18
 
-      - name: Install dependencies
-        run: npm ci
+      - name: 📦 Install Dependencies
+        run: npm install
 
-      - name: Build the project
+      - name: 🛠️ Build Project
         run: npm run build
 
-      - name: Deploy to GitHub Pages
+      - name: 📝 Set CNAME for Dev or Prod
+        run: |
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            echo "www.dawsoncommunitysports.online" > dist/CNAME
+          else
+            echo "dev.dawsoncommunitysports.online" > dist/CNAME
+          fi
+
+      - name: 🚀 Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          cname: www.dawsoncommunitysports.online
-
+          publish_branch: ${{ github.ref_name == 'main' && 'gh-pages' || 'gh-pages-dev' }}
