@@ -1,7 +1,7 @@
 // src/components/Gallery.tsx
 import React, { useEffect, useState, useRef } from 'react';
 
-const GALLERY_API = 'https://dawsoncommunitysports.onrender.com/';
+const GALLERY_API = 'https://dawsoncommunitysports.onrender.com';
 
 const Gallery = () => {
   const [images, setImages] = useState<string[]>([]);
