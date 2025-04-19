@@ -1,3 +1,4 @@
+// src/App.tsx
 import React, { useEffect, useState } from 'react';
 import './index.css';
 import logo from '../public/logo.png';
@@ -5,9 +6,11 @@ import { AnimatePresence, motion } from 'framer-motion';
 import HomeContent from './components/HomeContent';
 import EventDetail from './components/EventDetail';
 import Leaderboard from './components/Leaderboard';
+import Gallery from './components/Gallery';
+import Subdivisions from './components/Subdivisions';
 
 const App = () => {
-  const [activeTab, setActiveTab] = useState<'home' | 'leaderboard' | 'eventDetail'>('home');
+  const [activeTab, setActiveTab] = useState<'home' | 'leaderboard' | 'eventDetail' | 'gallery' | 'subdivisions'>('home');
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [leaderboardData, setLeaderboardData] = useState<any[]>([]);
   const [darkMode, setDarkMode] = useState<boolean>(() => {
@@ -61,27 +64,39 @@ const App = () => {
   }, []);
 
   const renderTab = () => {
-    if (activeTab === 'home') return <HomeContent setActiveTab={setActiveTab} setSelectedEvent={setSelectedEvent} />;
-    if (activeTab === 'leaderboard') return <Leaderboard data={leaderboardData} />;
-    if (activeTab === 'eventDetail' && selectedEvent) return <EventDetail event={selectedEvent} />;
-    return null;
+    switch (activeTab) {
+      case 'home':
+        return <HomeContent setActiveTab={setActiveTab} setSelectedEvent={setSelectedEvent} />;
+      case 'leaderboard':
+        return <Leaderboard data={leaderboardData} />;
+      case 'gallery':
+        return <Gallery />;
+      case 'subdivisions':
+        return <Subdivisions />;
+      case 'eventDetail':
+        return selectedEvent && <EventDetail event={selectedEvent} />;
+      default:
+        return null;
+    }
   };
 
   return (
     <div className={`${darkMode ? 'dark' : ''}`}>
       <div className="font-sans text-gray-800 dark:text-gray-100 min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <nav className="bg-blue-900 dark:bg-gray-900 text-white flex items-center justify-between px-4 py-4 shadow-md">
-          <div className="flex gap-8">
+          <div className="flex gap-6 sm:gap-8 flex-wrap">
             <button onClick={() => setActiveTab('home')} className={`hover:underline ${activeTab === 'home' ? 'font-bold' : ''}`}>Home</button>
-            <button onClick={() => setActiveTab('leaderboard')} className={`hover:underline ${activeTab === 'leaderboard' ? 'font-bold' : ''}`}>Cardio Challenge Leaderboard</button>
+            <button onClick={() => setActiveTab('leaderboard')} className={`hover:underline ${activeTab === 'leaderboard' ? 'font-bold' : ''}`}>Leaderboard</button>
+            <button onClick={() => setActiveTab('gallery')} className={`hover:underline ${activeTab === 'gallery' ? 'font-bold' : ''}`}>Gallery</button>
+            <button onClick={() => setActiveTab('subdivisions')} className={`hover:underline ${activeTab === 'subdivisions' ? 'font-bold' : ''}`}>Subdivisions</button>
           </div>
           <div className="flex items-center gap-4">
-            <div className="bg-yellow-400 text-blue-900 dark:text-gray-800 text-sm font-semibold px-4 py-1 rounded-full shadow-md transition-all duration-300">
+            <div className="bg-yellow-400 text-blue-900 dark:text-gray-800 text-sm font-semibold px-4 py-1 rounded-full shadow-md">
               Finals in: {countdown}
             </div>
             <button
               onClick={() => setDarkMode(prev => !prev)}
-              className="bg-blue-700 dark:bg-gray-700 px-3 py-1 rounded transition"
+              className="bg-blue-700 dark:bg-gray-700 px-3 py-1 rounded"
             >
               {darkMode ? '☀️ Light' : '🌙 Dark'}
             </button>
