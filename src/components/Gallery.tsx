@@ -8,14 +8,29 @@ const Gallery = () => {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const fetchImages = async () => {
     try {
       const res = await fetch(`${GALLERY_API}/images`);
       const data = await res.json();
       setImages(data);
+      setCurrentIdx(0); // reset on fresh load
     } catch (error) {
       console.error('Failed to load images', error);
+    }
+  };
+
+  const startSlideshow = () => {
+    stopSlideshow();
+    intervalRef.current = setInterval(() => {
+      setCurrentIdx((prev) => (prev + 1) % images.length);
+    }, 3000);
+  };
+
+  const stopSlideshow = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
     }
   };
 
@@ -24,11 +39,10 @@ const Gallery = () => {
   }, []);
 
   useEffect(() => {
-    if (images.length === 0) return;
-    const interval = setInterval(() => {
-      setCurrentIdx((prev) => (prev + 1) % images.length);
-    }, 3000);
-    return () => clearInterval(interval);
+    if (images.length > 0) {
+      startSlideshow();
+    }
+    return () => stopSlideshow();
   }, [images]);
 
   const handleUpload = async (e: React.FormEvent) => {
@@ -47,7 +61,6 @@ const Gallery = () => {
       });
 
       if (!res.ok) throw new Error('Upload failed');
-
       await fetchImages();
       if (fileInputRef.current) fileInputRef.current.value = '';
     } catch (err) {
@@ -58,11 +71,17 @@ const Gallery = () => {
     }
   };
 
+  const handleThumbnailClick = (idx: number) => {
+    stopSlideshow();
+    setCurrentIdx(idx);
+    startSlideshow();
+  };
+
   return (
     <div className="max-w-5xl mx-auto px-4 mt-12 mb-12 text-center">
       <h2 className="text-4xl font-bold text-blue-800 dark:text-blue-300 mb-4">📸 Event Gallery</h2>
       <p className="text-md text-gray-600 dark:text-gray-300 mb-6">
-        Celebrate your subdivision’s moments! Upload your favorite photos and see them in the slideshow below.
+        Celebrate your subdivision’s moments! Upload your favorite photos and enjoy the slideshow below.
       </p>
 
       <form
@@ -85,13 +104,32 @@ const Gallery = () => {
       </form>
 
       {images.length > 0 ? (
-        <div className="relative w-full h-[28rem] max-w-4xl mx-auto overflow-hidden rounded-lg shadow-lg bg-gray-100 dark:bg-gray-800 transition">
-          <img
-            src={`${GALLERY_API}/uploads/${images[currentIdx]}`}
-            alt={`Slide ${currentIdx + 1}`}
-            className="object-contain w-full h-full transition duration-700 ease-in-out"
-          />
-        </div>
+        <>
+          <div className="relative w-full h-[28rem] max-w-4xl mx-auto overflow-hidden rounded-lg shadow-lg bg-gray-100 dark:bg-gray-800 transition">
+            <img
+              src={`${GALLERY_API}/uploads/${images[currentIdx]}`}
+              alt={`Slide ${currentIdx + 1}`}
+              className="object-contain w-full h-full transition duration-700 ease-in-out"
+            />
+          </div>
+
+          <div className="mt-6 flex justify-center flex-wrap gap-2">
+            {images.map((img, idx) => (
+              <img
+                key={idx}
+                src={`${GALLERY_API}/uploads/${img}`}
+                alt={`Thumbnail ${idx + 1}`}
+                className={`w-16 h-16 object-cover border-2 rounded cursor-pointer transition-all duration-200 ${
+                  idx === currentIdx
+                    ? 'border-blue-600 dark:border-yellow-400 scale-105'
+                    : 'border-gray-300 dark:border-gray-600 opacity-80 hover:opacity-100'
+                }`}
+                onClick={() => handleThumbnailClick(idx)}
+              />
+            ))}
+          </div>
+
+        </>
       ) : (
         <p className="text-gray-600 dark:text-gray-400">No images uploaded yet. Be the first to share a moment!</p>
       )}

@@ -3,3 +3,4 @@ node_modules
 venv
 get_pacer_token.sh
 get_pacer_leaderboard.sh
+.image-delete-passphrase
