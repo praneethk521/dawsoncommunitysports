@@ -1,4 +1,3 @@
-// src/App.tsx
 import React, { useEffect, useState } from 'react';
 import './index.css';
 import logo from '../public/logo.png';
@@ -13,18 +12,28 @@ const App = () => {
   const [activeTab, setActiveTab] = useState<'home' | 'leaderboard' | 'eventDetail' | 'gallery' | 'subdivisions'>('home');
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [leaderboardData, setLeaderboardData] = useState<any[]>([]);
-  const [darkMode, setDarkMode] = useState<boolean>(() => {
-    if (typeof window !== 'undefined') {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches || localStorage.getItem('darkMode') === 'true';
-    }
-    return false;
-  });
+  const [darkMode, setDarkMode] = useState<boolean>(false); // Default to light
 
   const [countdown, setCountdown] = useState('');
 
   useEffect(() => {
-    const root = window.document.documentElement;
-    darkMode ? root.classList.add('dark') : root.classList.remove('dark');
+    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+    const savedPref = localStorage.getItem('darkMode');
+
+    if (isMobile) {
+      setDarkMode(false);
+    } else {
+      setDarkMode(savedPref === 'true');
+    }
+  }, []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (darkMode) {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
     localStorage.setItem('darkMode', JSON.stringify(darkMode));
   }, [darkMode]);
 
@@ -82,7 +91,7 @@ const App = () => {
 
   return (
     <div className={`${darkMode ? 'dark' : ''}`}>
-      <div className="font-sans text-gray-800 dark:text-gray-100 min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <div className="font-sans text-gray-900 dark:text-gray-100 min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <nav className="bg-blue-900 dark:bg-gray-900 text-white flex items-center justify-between px-4 py-4 shadow-md">
           <div className="flex gap-6 sm:gap-8 flex-wrap">
             <button onClick={() => setActiveTab('home')} className={`hover:underline ${activeTab === 'home' ? 'font-bold' : ''}`}>Home</button>
@@ -91,12 +100,12 @@ const App = () => {
             <button onClick={() => setActiveTab('subdivisions')} className={`hover:underline ${activeTab === 'subdivisions' ? 'font-bold' : ''}`}>Subdivisions</button>
           </div>
           <div className="flex items-center gap-4">
-            <div className="bg-yellow-400 text-blue-900 dark:text-gray-800 text-sm font-semibold px-4 py-1 rounded-full shadow-md">
+            <div className="bg-yellow-400 text-blue-900 dark:text-gray-900 text-sm font-semibold px-4 py-1 rounded-full shadow-md">
               Finals in: {countdown}
             </div>
             <button
               onClick={() => setDarkMode(prev => !prev)}
-              className="bg-blue-700 dark:bg-gray-700 px-3 py-1 rounded"
+              className="bg-blue-700 dark:bg-gray-700 px-3 py-1 rounded transition"
             >
               {darkMode ? '☀️ Light' : '🌙 Dark'}
             </button>
@@ -115,7 +124,7 @@ const App = () => {
           </motion.div>
         </AnimatePresence>
 
-        <footer className="bg-gray-100 dark:bg-gray-800 mt-16 py-4 text-center text-sm text-gray-500 dark:text-gray-400">
+        <footer className="bg-gray-100 dark:bg-gray-800 mt-16 py-4 text-center text-sm text-gray-600 dark:text-gray-400">
           &copy; 2025 Dawson Community Sports. All rights reserved.
         </footer>
       </div>
