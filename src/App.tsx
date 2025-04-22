@@ -4,16 +4,12 @@ import logo from '../public/logo.png';
 import { AnimatePresence, motion } from 'framer-motion';
 import HomeContent from './components/HomeContent';
 import EventDetail from './components/EventDetail';
-import Leaderboard from './components/Leaderboard';
-import Gallery from './components/Gallery';
 import Subdivisions from './components/Subdivisions';
 
 const App = () => {
-  const [activeTab, setActiveTab] = useState<'home' | 'leaderboard' | 'eventDetail' | 'gallery' | 'subdivisions'>('home');
+  const [activeTab, setActiveTab] = useState<'home' | 'eventDetail' | 'subdivisions' | 'schedules' | 'contacts'>('home');
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [leaderboardData, setLeaderboardData] = useState<any[]>([]);
-  const [darkMode, setDarkMode] = useState<boolean>(false); // Default to light
-
+  const [darkMode, setDarkMode] = useState<boolean>(false);
   const [countdown, setCountdown] = useState('');
 
   useEffect(() => {
@@ -29,29 +25,9 @@ const App = () => {
 
   useEffect(() => {
     const root = document.documentElement;
-    if (darkMode) {
-      root.classList.add('dark');
-    } else {
-      root.classList.remove('dark');
-    }
+    root.classList.toggle('dark', darkMode);
     localStorage.setItem('darkMode', JSON.stringify(darkMode));
   }, [darkMode]);
-
-  useEffect(() => {
-    if (activeTab === 'leaderboard') {
-      fetchLeaderboard();
-    }
-  }, [activeTab]);
-
-  const fetchLeaderboard = async () => {
-    try {
-      const response = await fetch('/api/pacer-leaderboard');
-      const data = await response.json();
-      setLeaderboardData(data);
-    } catch (err) {
-      console.error('Failed to fetch leaderboard data', err);
-    }
-  };
 
   useEffect(() => {
     const target = new Date('2025-05-17T13:00:00Z'); // 9 AM EST in UTC
@@ -76,14 +52,31 @@ const App = () => {
     switch (activeTab) {
       case 'home':
         return <HomeContent setActiveTab={setActiveTab} setSelectedEvent={setSelectedEvent} />;
-      case 'leaderboard':
-        return <Leaderboard data={leaderboardData} />;
-      case 'gallery':
-        return <Gallery />;
-      case 'subdivisions':
-        return <Subdivisions />;
       case 'eventDetail':
         return selectedEvent && <EventDetail event={selectedEvent} />;
+      case 'subdivisions':
+        return <Subdivisions />;
+      case 'schedules':
+        return (
+          <div className="max-w-3xl mx-auto px-4 mt-12 text-center">
+            <h2 className="text-3xl font-bold text-blue-800 dark:text-blue-300 mb-4">📆 Event Schedules</h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300">
+              Coming soon — full schedule of events and timings will be published here!
+            </p>
+          </div>
+        );
+      case 'contacts':
+        return (
+          <div className="max-w-3xl mx-auto px-4 mt-12 text-center">
+            <h2 className="text-3xl font-bold text-blue-800 dark:text-blue-300 mb-4">📞 Contact Information</h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300">
+              For questions, reach out to your subdivision SPOC or email us at{' '}
+              <a href="mailto:support@dawsoncommunitysports.online" className="underline text-blue-700 dark:text-blue-300">
+                support@dawsoncommunitysports.online
+              </a>.
+            </p>
+          </div>
+        );
       default:
         return null;
     }
@@ -95,8 +88,8 @@ const App = () => {
         <nav className="bg-blue-900 dark:bg-gray-900 text-white flex items-center justify-between px-4 py-4 shadow-md">
           <div className="flex gap-6 sm:gap-8 flex-wrap">
             <button onClick={() => setActiveTab('home')} className={`hover:underline ${activeTab === 'home' ? 'font-bold' : ''}`}>Home</button>
-            <button onClick={() => setActiveTab('leaderboard')} className={`hover:underline ${activeTab === 'leaderboard' ? 'font-bold' : ''}`}>Leaderboard</button>
-            <button onClick={() => setActiveTab('gallery')} className={`hover:underline ${activeTab === 'gallery' ? 'font-bold' : ''}`}>Gallery</button>
+            <button onClick={() => setActiveTab('schedules')} className={`hover:underline ${activeTab === 'schedules' ? 'font-bold' : ''}`}>Schedules</button>
+            <button onClick={() => setActiveTab('contacts')} className={`hover:underline ${activeTab === 'contacts' ? 'font-bold' : ''}`}>Contacts</button>
             <button onClick={() => setActiveTab('subdivisions')} className={`hover:underline ${activeTab === 'subdivisions' ? 'font-bold' : ''}`}>Subdivisions</button>
           </div>
           <div className="flex items-center gap-4">

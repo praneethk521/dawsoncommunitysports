@@ -30,32 +30,67 @@ const EventDetail = ({ event }: any) => {
         );
       }
   
-      // Plank Challenge
-      if (title.includes('Plank Challenge')) {
-        return (
-          <div className="mt-10 flex flex-col md:flex-row gap-10 items-center md:items-start">
-            <div className="md:w-1/2 flex justify-center">
-              <img
-                src="/plank-challenge.jpg"
-                alt="Plank"
-                className="rounded-xl shadow-lg w-full max-w-md object-contain"
-              />
-            </div>
-            <div className="md:w-1/2 text-left">
-              <h3 className="text-2xl font-bold mb-2 text-blue-700 dark:text-blue-300">🧘‍♀️ Plank Challenge</h3>
-              <h4 className="text-lg font-semibold mb-2 text-blue-600 dark:text-blue-200">📋 Challenge Guidelines</h4>
-              <ul className="list-disc list-inside">
-                <li>This is an individual endurance event for female participants.</li>
-                <li>If multiple participants register from a community, SPOCs will hold internal rounds to select one finalist.</li>
-                <li>Each finalist will perform a plank hold during the in-person challenge on <strong>May 17</strong>.</li>
-                <li>The participant with the longest continuous plank hold will be crowned the winner.</li>
-                <li>Proper form must be maintained throughout—judges will monitor for dips, breaks, or improper technique.</li>
-                <li>Venue: <strong>TBD</strong></li>
-              </ul>
-            </div>
+      // Plank Challenge (Updated)
+    if (title.includes('Plank Challenge')) {
+      return (
+        <div className="mt-10 flex flex-col md:flex-row gap-10 items-center md:items-start">
+          <div className="md:w-1/2 flex justify-center">
+            <img
+              src="/plank-challenge.jpg"
+              alt="Plank"
+              className="rounded-xl shadow-lg w-full max-w-md object-contain"
+            />
           </div>
-        );
-      }
+          <div className="md:w-1/2 text-left">
+            <h3 className="text-2xl font-bold mb-2 text-blue-700 dark:text-blue-300">🧘‍♀️ Plank Challenge</h3>
+            <h4 className="text-lg font-semibold mb-2 text-blue-600 dark:text-blue-200">📋 Challenge Guidelines</h4>
+            <ul className="list-disc list-inside">
+              <li><strong>Format:</strong> Individual competition – one person at a time. Timer starts in correct position.</li>
+              <li><strong>Plank Position:</strong> Elbow plank only. Elbows below shoulders. Body must stay straight.</li>
+              <li><strong>Time Tracking:</strong> Time continues only in correct position. Any break = timer stops.</li>
+              <li><strong>Rounds:</strong> One attempt per participant.</li>
+              <li><strong>Clothing:</strong> Wear comfortable workout gear. Use a mat or soft surface.</li>
+            </ul>
+          </div>
+        </div>
+      );
+    }
+
+    // Carroms Challenge
+    if (title.includes('Carroms')) {
+      return (
+        <div className="mt-10 flex flex-col md:flex-row gap-10 items-center md:items-start">
+          <div className="md:w-1/2 flex justify-center">
+            <img
+              src="/carroms-challenge.jpg"
+              alt="Carroms"
+              className="rounded-xl shadow-lg w-full max-w-md object-contain"
+            />
+          </div>
+          <div className="md:w-1/2 text-left">
+            <h3 className="text-2xl font-bold mb-2 text-blue-700 dark:text-blue-300">🎯 Carroms Competition</h3>
+            <h4 className="text-lg font-semibold mb-2 text-blue-600 dark:text-blue-200">📋 Challenge Guidelines</h4>
+            <ul className="list-disc list-inside">
+              <li><strong>Teams:</strong> Doubles (2 per team). Format will be finalized based on registrations.</li>
+              <li><strong>Goal:</strong> Pocket all your coins before your opponent. Queen (Red) must be covered in next shot.</li>
+              <li><strong>Playing Rules:</strong>
+                <ul className="ml-5 list-disc">
+                  <li>Pocket your coin → continue turn.</li>
+                  <li>Miss → opponent’s turn.</li>
+                  <li>No back thumb hits. Only forward or side flicks using index or middle finger.</li>
+                  <li>Striker pocketed → 1 of your coins returned to board.</li>
+                  <li>Directly pocket opponent’s coin → turn ends.</li>
+                  <li>Uncovered Queen → placed back at center.</li>
+                  <li>Rough play → opponent gets to place one coin back.</li>
+                </ul>
+              </li>
+              <li><strong>Position Rules:</strong> You may hit coins on arrows. Cannot directly hit opponent’s coin.</li>
+            </ul>
+          </div>
+        </div>
+      );
+    }
+  
     if (title.includes('Badminton Competition')) {
       return (
         <div className="mt-10 flex flex-col md:flex-row gap-10 items-center md:items-start">
