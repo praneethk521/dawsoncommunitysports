@@ -204,9 +204,17 @@ type RawEntry = { subdivision: string; mens: string; womens: string };
 
 // Map marker coordinates
 const subdivisionsMap = [
-  { name: 'Sosebee Creek',   lat: 34.343527, lng: -84.070764 },
-  { name: 'Woods at Dawson', lat: 34.356506, lng: -84.064244 },
-  // …other subdivisions…
+  { name: 'Sosebee Creek', lat: 34.343527, lng: -84.070764 },
+   { name: 'Woods at Dawson', lat: 34.356506, lng: -84.064244 },
+   { name: 'Dawson Grove', lat: 34.3402, lng: -84.1033 },
+   { name: 'Crosby Square', lat: 34.42638, lng: -84.138556 },
+   { name: 'Oaks at Dawson', lat: 34.42638, lng: -84.138556 },
+   { name: 'Ellorie Estates', lat: 34.330472, lng: -84.095752 },
+   { name: 'Addison Grove', lat: 34.333502, lng: -84.086081 },
+   { name: 'Kenneson Creek', lat: 34.316495, lng: -84.097573 },
+   { name: 'Etowah Preserve', lat: 34.35319, lng: -84.128995 },
+   { name: 'Conner Farm', lat: 34.319114, lng: -84.098765 },
+   { name: 'Other', lat: 34.3300, lng: -84.0900 },
 ];
 
 const Subdivisions: React.FC = () => {
