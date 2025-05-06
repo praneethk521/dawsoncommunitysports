@@ -77,7 +77,7 @@ const EventDetail = ({ event }: any) => {
                 <ul className="ml-5 list-disc">
                   <li>Pocket your coin → continue turn.</li>
                   <li>Miss → opponent’s turn.</li>
-                  <li>No back thumb hits. Only forward or side flicks using index or middle finger.</li>
+                  <li>No back and side flicks.</li>
                   <li>Striker pocketed → 1 of your coins returned to board.</li>
                   <li>Directly pocket opponent’s coin → turn ends.</li>
                   <li>Uncovered Queen → placed back at center.</li>
